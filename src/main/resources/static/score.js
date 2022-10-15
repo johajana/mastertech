@@ -1,4 +1,3 @@
-//SCORE_URL = "api/Score/"
 SCORE_URL = "http://144.22.132.216:8080/api/Score/"
 
 function traerScore() {
