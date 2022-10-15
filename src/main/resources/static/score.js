@@ -1,5 +1,4 @@
-//SCORE_URL = "api/Score/"
-SCORE_URL = "http://144.22.132.216:8080/api/Score/"
+SCORE_URL = "http://168.138.224.199:8080/api/Score/"
 
 function traerScore() {
     //FUNCION GET

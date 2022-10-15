@@ -1,5 +1,4 @@
-//CLIENT_URL = "api/Client/"
-CLIENT_URL = "http://129.148.31.104:8080/api/Client/"
+CLIENT_URL = "http://168.138.224.199:8080/api/Client/"
 
 function traerCliente() {
     //FUNCION GET
