@@ -1,5 +1,4 @@
-//MESSAGE_URL = "api/Message/"
-MESSAGE_URL = "http://129.148.31.104:8080/api/Message/"
+MESSAGE_URL = "http://144.22.132.216:8080/api/Message/"
 
 function traerMensajes() {
     //FUNCION GET
