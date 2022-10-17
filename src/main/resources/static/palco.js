@@ -93,13 +93,60 @@ function adicionarRegistroPalco() {
 
 }
 
+function editarInformacionPalco() {
+    let data = {
+        name: nombre.val(),
+        capacity: capacidad.val(),
+        description: descripcion.val(),
+        category: {id: categoria.val()},
+        location: ubicacion.val(),
 
 
+    };
+    let dataToSend = JSON.stringify(data);
+    console.log(dataToSend);
+    $.ajax({
+        url: PALCO_URL + "update",
+        type: 'PUT',
+        dataType: 'json',
+        data: dataToSend,
+        contentType: 'application/json',
 
+        success: function (respuesta) {
+            nombre.val("");
+            capacidad.val("");
+            descripcion.val("");
+            categoria.val("");
+            ubicacion.val("");
+            alert("Se ha actualizado")
+        },
+        error: function (xhr, status) {
+            console.log(xhr)
+        },
+        complete: function () {
+            traerPalco();
+        }
 
+    });
 
+}
 
+function borrarRegistroPalco(idPalco) {
 
+    $.ajax({
+        url: PALCO_URL + idPalco,
+        type: 'DELETE',
+        dataType: 'json',
+        contentType: 'application/json',
+
+        success: function (respuesta) {
+            $("#resultado").empty();
+            traerInformacion();
+            alert("Eliminar")
+
+        }
+    });
+}
 
 
 

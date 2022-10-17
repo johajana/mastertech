@@ -1,5 +1,6 @@
 ADMIN_URL = "http://168.138.224.199:8080/api/Admin/"
 
+
 function traerAdmin() {
     //FUNCION GET
     $.ajax({
@@ -81,3 +82,75 @@ function adicionarRegistroAdmin() {
     });
 
 }
+
+function actualizarRegistroAdmin() {
+    const nombre = $("#nombreAdmin");
+    const correo = $("#correoAdmin");
+    const contrasena = $("#contrasenaAdmin");
+
+
+    let data = {
+        name: nombre.val(),
+        email: correo.val(),
+        password: contrasena.val()
+    };
+
+    let dataToSend = JSON.stringify(data);
+    console.log(dataToSend);
+    $.ajax({
+        url: ADMIN_URL + "save",
+        type: 'PUT', //dataType : 'json',
+        data: dataToSend,
+        contentType: 'application/json',
+
+
+        success: function (data) {
+            nombre.val("");
+            correo.val("");
+            contrasena.val("");
+            alert('Registro Editado');
+        },
+        error: function (xhr, status) {
+            console.log(xhr)
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerAdmin();
+        }
+    });
+
+}
+
+function borrarRegistroAdmin(idAdmin) {
+
+    let data = {
+        id: idAdmin,
+    };
+
+    let dataToSend = JSON.stringify(data);
+    console.log(dataToSend);
+    $.ajax({
+        url: ADMIN_URL + "save",
+        type: 'DELETE', //dataType : 'json',
+        data: dataToSend,
+        contentType: 'application/json',
+
+        success: function (data) {
+            nombre.val("");
+            correo.val("");
+            contrasena.val("");
+            alert('Registro Borrado');
+        },
+        error: function (xhr, status) {
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerAdmin();
+        }
+
+    });
+
+}
+
+
+

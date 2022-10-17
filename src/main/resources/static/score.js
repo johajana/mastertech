@@ -82,3 +82,76 @@ function adicionarRegistroScore() {
 
 }
 
+function populateScoreFields(id, stars, messageText, idReservation) {
+    $("#calificacion").val(id);
+    $("#mensaje").val(messageText);
+    $("#reseva").val(idReservation);
+
+}
+
+function actualizarRegistroScore() {
+    const calificacion = $("#calificacionScore");
+    const mensaje = $("#mensajeScore");
+    const reserva = $("#reservaScore");
+
+
+    let data = {
+        stars: calificacion.val(),
+        messageText: mensaje.val(),
+        reservation: reserva.val(),
+    };
+
+    let dataToSend = JSON.stringify(data);
+    console.log(dataToSend);
+    $.ajax({
+        url: SCORE_URL + "update",
+        type: 'PUT', //dataType : 'json',
+        data: dataToSend,
+        contentType: 'application/json',
+
+
+        success: function (data) {
+            calificacion.val("");
+            mensaje.val("");
+            reserva.val("");
+
+            alert('Registro Editado');
+        },
+        error: function (xhr, status) {
+            console.log(xhr)
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerScore();
+        }
+    });
+
+}
+
+function borrarRegistroScore(idScore) {
+
+    $.ajax({
+        url: SCORE_URL + idScore,
+        type: 'DELETE', //dataType : 'json',
+        contentType: 'application/json',
+
+        success: function (data) {
+            calificacion.val("");
+            mensaje.val("");
+            reserva.val("");
+
+            alert('Registro Borrado');
+        },
+        error: function (xhr, status) {
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerScore();
+        }
+
+    });
+
+}
+
+
+

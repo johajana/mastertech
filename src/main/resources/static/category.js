@@ -1,5 +1,6 @@
 CATEGORY_URL = "http://168.138.224.199:8080/api/Category/"
 
+
 function traerCategory() {
     //FUNCION GET
     $.ajax({
@@ -27,7 +28,7 @@ function drawTableRowCategory(category) {
         <th scope="row">${category.id}</th>
         <td>${category.name}</td>
         <td>${category.description}</td>
-        <td>${category.boxes.map(box => " " +box.name)}</td>
+        <td>${category.boxes.map(box => " " + box.name)}</td>
         <td>    
         </div>
         </td>
@@ -79,4 +80,73 @@ function adicionarRegistroCategory() {
     });
 
 }
+
+function populateCategoryFields(id, name, description) {
+    $("#idCategory").val(id);
+    $("#nombreCategory").val(name);
+    $("#descripcionCategory").val(description);
+
+}
+
+function actualizarRegistroCategory() {
+    const id = $("#idcategory");
+    const nombre = $("#nameCategory");
+    const descripcion = $("#descriptionCategory");
+
+
+    let data = {
+        id: id.val(), name: nombre.val(), description: descripcion.val(),
+    };
+    let dataToSend = JSON.stringify(data);
+
+
+    $.ajax({
+        url: CATEGORY_URL + "update",
+        type: 'PUT', //dataType : 'json',
+        data: dataToSend,
+        contentType: 'application/json',
+
+        success: function (data) {
+            id.val("");
+            nombre.val("");
+            descripcion.val("");
+            alert('Registro Editado');
+        },
+        error: function (xhr, status) {
+            console.log(xhr)
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerCategory();
+        }
+    });
+
+}
+
+function borrarRegistroCategory(idCategory) {
+    $.ajax({
+        url: PALCO_URL + idCategory,
+        type: 'DELETE', //dataType : 'json',
+        contentType: 'application/json',
+
+        success: function (data) {
+            $("#id").val("");
+            $("#name").val("");
+            $("#description").val("");
+            alert('Registro Borrado');
+        },
+        error: function (xhr, status) {
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerCategory();
+        }
+
+    });
+
+}
+
+
+
+
 

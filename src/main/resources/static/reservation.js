@@ -1,5 +1,7 @@
 RESERVATION_URL = "http://168.138.224.199:8080/api/Reservation/"
 
+
+
 function traerReservation() {
     //FUNCION GET
     $.ajax({
@@ -83,4 +85,80 @@ function adicionarRegistroReservation() {
         }
     });
 }
+
+function populateReservationFields(id, name, email, age) {
+    $("#palco").val(id.client);
+    $("#cliente").val(client.name);
+    $("#fechaInicio").val(startDate);
+    $("#fechaEntrega").val(devolutionDate);
+}
+
+function actualizarRegistroReservation() {
+    const palco = $("#palcoReservation");
+    const cliente = $("#clienteReservation");
+    const fechaInicio = $("#fechaInicioReservation");
+    const fechaEntrega = $("#fechaEntregaReservation");
+
+
+    let data = {
+        box: palco.val(),
+        client: cliente.val(),
+        startDate: fechaInicio.val(),
+        devolutionDate: fechaEntrega.val()
+    };
+
+    let dataToSend = JSON.stringify(data);
+    console.log(dataToSend);
+    $.ajax({
+        url: RESERVATION_URL + "update",
+        type: 'PUT', //dataType : 'json',
+        data: dataToSend,
+        contentType: 'application/json',
+
+
+        success: function (data) {
+            palco.val("");
+            cliente.val("");
+            fechaInicio("");
+            fechaEntrega.val("");
+            alert('Registro Editado');
+        },
+        error: function (xhr, status) {
+            console.log(xhr)
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerReservation();
+        }
+    });
+
+}
+
+function borrarRegistroReservation(idReservation) {
+
+    $.ajax({
+        url: RESERVATION_URL + idReservation,
+        type: 'DELETE', //dataType : 'json',
+        contentType: 'application/json',
+
+        success: function (data) {
+            palco.val("");
+            cliente.val("");
+            fechaInicio.val("");
+            fechaEntrega.val("");
+            alert('Registro Borrado');
+        },
+        error: function (xhr, status) {
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerReservation();
+        }
+
+    });
+
+}
+
+
+
 

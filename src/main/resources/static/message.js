@@ -1,5 +1,6 @@
 MESSAGE_URL = "http://168.138.224.199:8080/api/Message/"
 
+
 function traerMensajes() {
     //FUNCION GET
     $.ajax({
@@ -84,4 +85,81 @@ function adicionarRegistroMensajes() {
     });
 
 }
+
+function populateMensajeFields(id, box, client, messageText) {
+    $("#idPalco").val(id);
+    $("#palco").val(box);
+    $("#cliente").val(client);
+    $("#texto").val(messageText);
+
+}
+
+function actualizarRegistroMenssage() {
+    const id = $("#idMessage");
+    const palco = $("#boxMessage");
+    const cliente = $("#clientMessage");
+    const texto = $("#textMessage");
+    const nombre = $("#nameMessage");
+
+
+    let data = {
+        id: id.val(), box: palco.val(), client: cliente.val(), messageText: texto.val(),
+    };
+    let dataToSend = JSON.stringify(data);
+
+
+    $.ajax({
+        url: MESSAGE_URL + "update",
+        type: 'PUT', //dataType : 'json',
+        data: dataToSend,
+        contentType: 'application/json',
+
+        success: function (data) {
+            id.val("");
+            palco.val("");
+            cliente.val("");
+            texto.val("");
+            alert('Registro Editado');
+        },
+        error: function (xhr, status) {
+            console.log(xhr)
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerMensajes();
+        }
+    });
+
+}
+
+function borrarRegistroMensaje(idMensaje) {
+
+    $.ajax({
+        url: MESSAGE_URL + idMensaje,
+        type: 'DELETE', //dataType : 'json',
+        contentType: 'application/json',
+
+        success: function () {
+            $("#id").val("");
+            $("#box").val("");
+            $("#client").val("");
+            $("#text").val("");
+            alert('Registro Borrado');
+        },
+        error: function (xhr, status) {
+            //  alert('ha sucedido un problema');
+        },
+        complete: function () {
+            traerMensajes();
+        }
+
+    });
+
+}
+
+
+
+
+
+
 
