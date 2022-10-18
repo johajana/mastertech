@@ -10,14 +10,10 @@ function traerPalco() {
 
         success: function (data) {
             console.log(data)
-            if (data.length) {
-                pintarRespuestaPalco(data);
-            }
-
-
+            pintarRespuestaPalco(data);
         },
         error: function (xhr, status) {
-            alert(xhr);
+            console.log(xhr);
             alert('Ha sucedido un problema');
         }
     });
@@ -32,6 +28,13 @@ function drawTableRowPalco(palco) {
         <td>${palco.category?.name}</td>
          <td>${palco.location}</td>
         <td>
+        <div class="row g-3">
+            <div class="col-auto">
+                <button class="btn btn-warning" onclick="editarInformacionPalco()"> Actualizar</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger" onclick="borrarRegistroPalco(${palco.id})"> Borrar</button>
+            </div>
         </div>
         </td>
     </tr>`
@@ -94,15 +97,7 @@ function adicionarRegistroPalco() {
 }
 
 function editarInformacionPalco() {
-    let data = {
-        name: nombre.val(),
-        capacity: capacidad.val(),
-        description: descripcion.val(),
-        category: {id: categoria.val()},
-        location: ubicacion.val(),
-
-
-    };
+    let data = {};
     let dataToSend = JSON.stringify(data);
     console.log(dataToSend);
     $.ajax({
@@ -113,11 +108,6 @@ function editarInformacionPalco() {
         contentType: 'application/json',
 
         success: function (respuesta) {
-            nombre.val("");
-            capacidad.val("");
-            descripcion.val("");
-            categoria.val("");
-            ubicacion.val("");
             alert("Se ha actualizado")
         },
         error: function (xhr, status) {
@@ -139,11 +129,11 @@ function borrarRegistroPalco(idPalco) {
         dataType: 'json',
         contentType: 'application/json',
 
-        success: function (respuesta) {
-            $("#resultado").empty();
-            traerInformacion();
-            alert("Eliminar")
-
+        error: function (xhr, status) {
+            console.log(xhr)
+        },
+        complete: function () {
+            traerPalco();
         }
     });
 }

@@ -11,9 +11,7 @@ function traerCategory() {
 
         success: function (data) {
             console.log(data)
-            if (data.length) {
-                pintarRespuestaCategory(data);
-            }
+            pintarRespuestaCategory(data);
 
         },
         error: function (xhr, status) {
@@ -30,6 +28,13 @@ function drawTableRowCategory(category) {
         <td>${category.description}</td>
         <td>${category.boxes.map(box => " " + box.name)}</td>
         <td>    
+        <div class="row g-3">
+            <div class="col-auto">
+                <button class="btn btn-warning" onclick="actualizarRegistroCategory()"> Actualizar</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger" onclick="borrarRegistroCategory(${category.id})"> Borrar</button>
+            </div>
         </div>
         </td>
     </tr>`
@@ -129,14 +134,11 @@ function borrarRegistroCategory(idCategory) {
         type: 'DELETE', //dataType : 'json',
         contentType: 'application/json',
 
-        success: function (data) {
-            $("#id").val("");
-            $("#name").val("");
-            $("#description").val("");
+        success: function () {
             alert('Registro Borrado');
         },
         error: function (xhr, status) {
-            //  alert('ha sucedido un problema');
+            console.log(xhr)
         },
         complete: function () {
             traerCategory();

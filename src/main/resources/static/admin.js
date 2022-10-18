@@ -4,19 +4,13 @@ ADMIN_URL = "http://168.138.224.199:8080/api/Admin/"
 function traerAdmin() {
     //FUNCION GET
     $.ajax({
-        url: ADMIN_URL + "all",
-        type: 'GET',
-        dataType: 'json',
-        contentType: "application/JSON",
+        url: ADMIN_URL + "all", type: 'GET', dataType: 'json', contentType: "application/JSON",
 
         success: function (data) {
             console.log(data)
-            if (data.length) {
-                pintarRespuestaAdmin(data);
-            }
+            pintarRespuestaAdmin(data);
 
-        },
-        error: function (xhr, status) {
+        }, error: function (xhr, status) {
             alert(xhr);
             alert('Ha sucedido un problema');
         }
@@ -30,6 +24,13 @@ function drawTableRowAdmin(admin) {
         <td>${admin.email}</td>
         <td>${admin.password}</td>
         <td>     
+        <div class="row g-3">
+            <div class="col-auto">
+                <button class="btn btn-warning" onclick="actualizarRegistroAdmin()"> Actualizar</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger" onclick="borrarRegistroAdmin(${admin.idAdmin})"> Borrar</button>
+            </div>
         </div>
         </td>
     </tr>`
@@ -53,29 +54,23 @@ function adicionarRegistroAdmin() {
     const contrasena = $("#contraseñaAdmin");
 
     let data = {
-        name: nombre.val(),
-        email: correo.val(),
-        password: contrasena.val()
+        name: nombre.val(), email: correo.val(), password: contrasena.val()
     };
 
     let dataToSend = JSON.stringify(data);
     console.log(dataToSend);
     $.ajax({
-        url: ADMIN_URL + "save",
-        type: 'POST', //dataType : 'json',
-        data: dataToSend,
-        contentType: 'application/json',
+        url: ADMIN_URL + "save", type: 'POST', //dataType : 'json',
+        data: dataToSend, contentType: 'application/json',
 
         success: function () {
             nombre.val("");
             correo.val("");
             contrasena.val("");
             alert('Registro Adicionado');
-        },
-        error: function (xhr, status) {
+        }, error: function (xhr, status) {
             console.log(xhr)
-        },
-        complete: function () {
+        }, complete: function () {
             traerAdmin();
         }
 
@@ -90,15 +85,13 @@ function actualizarRegistroAdmin() {
 
 
     let data = {
-        name: nombre.val(),
-        email: correo.val(),
-        password: contrasena.val()
+        name: nombre.val(), email: correo.val(), password: contrasena.val()
     };
 
     let dataToSend = JSON.stringify(data);
     console.log(dataToSend);
     $.ajax({
-        url: ADMIN_URL + "save",
+        url: ADMIN_URL + "update",
         type: 'PUT', //dataType : 'json',
         data: dataToSend,
         contentType: 'application/json',
@@ -109,12 +102,9 @@ function actualizarRegistroAdmin() {
             correo.val("");
             contrasena.val("");
             alert('Registro Editado');
-        },
-        error: function (xhr, status) {
+        }, error: function (xhr, status) {
             console.log(xhr)
-            //  alert('ha sucedido un problema');
-        },
-        complete: function () {
+        }, complete: function () {
             traerAdmin();
         }
     });
@@ -122,29 +112,16 @@ function actualizarRegistroAdmin() {
 }
 
 function borrarRegistroAdmin(idAdmin) {
-
-    let data = {
-        id: idAdmin,
-    };
-
-    let dataToSend = JSON.stringify(data);
-    console.log(dataToSend);
     $.ajax({
-        url: ADMIN_URL + "save",
-        type: 'DELETE', //dataType : 'json',
-        data: dataToSend,
+        url: ADMIN_URL + idAdmin,
+        type: 'DELETE',
         contentType: 'application/json',
 
         success: function (data) {
-            nombre.val("");
-            correo.val("");
-            contrasena.val("");
             alert('Registro Borrado');
-        },
-        error: function (xhr, status) {
-            //  alert('ha sucedido un problema');
-        },
-        complete: function () {
+        }, error: function (xhr, status) {
+            console.log(xhr)
+        }, complete: function () {
             traerAdmin();
         }
 

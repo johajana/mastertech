@@ -11,9 +11,7 @@ function traerCliente() {
 
         success: function (data) {
             console.log(data)
-            if (data.length) {
-                pintarRespuestaCliente(data);
-            }
+            pintarRespuestaCliente(data);
 
         },
         error: function (xhr, status) {
@@ -31,7 +29,13 @@ function drawTableRowCliente(cliente) {
         <td>${cliente.age}</td>
         <td>${cliente.password}</td>
         <td>
-        
+        <div class="row g-3">
+            <div class="col-auto">
+                <button class="btn btn-warning" onclick="actualizarRegistroCliente()"> Actualizar</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger" onclick="borrarRegistroCliente(${cliente.idClient})"> Borrar</button>
+            </div>
         </div>
         </td>
     </tr>`
@@ -143,15 +147,11 @@ function borrarRegistroCliente(idClient) {
         type: 'DELETE', //dataType : 'json',
         contentType: 'application/json',
 
-        success: function (data) {
-            nombre.val("");
-            correo.val("");
-            edad.val("");
-            contrasena.val("");
+        success: function () {
             alert('Registro Borrado');
         },
         error: function (xhr, status) {
-            //  alert('ha sucedido un problema');
+            console.log(xhr)
         },
         complete: function () {
             traerCliente();

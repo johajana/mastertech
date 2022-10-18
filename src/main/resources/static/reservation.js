@@ -1,7 +1,6 @@
 RESERVATION_URL = "http://168.138.224.199:8080/api/Reservation/"
 
 
-
 function traerReservation() {
     //FUNCION GET
     $.ajax({
@@ -12,14 +11,10 @@ function traerReservation() {
 
         success: function (data) {
             console.log(data)
-            if (data.length) {
-                pintarRespuestaReservation(data);
-            }
-
-
+            pintarRespuestaReservation(data);
         },
         error: function (xhr, status) {
-            alert(xhr);
+            console.log(xhr)
             alert('Ha sucedido un problema');
         }
     });
@@ -33,6 +28,13 @@ function drawTableRowReservation(reservation) {
         <td>${reservation.startDate}</td>
         <td>${reservation.devolutionDate}</td>
         <td>  
+        <div class="row g-3">
+            <div class="col-auto">
+                <button class="btn btn-warning" onclick="actualizarRegistroReservation()"> Actualizar</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger" onclick="borrarRegistroReservation(${reservation.idReservation})"> Borrar</button>
+            </div>
         </div>
         </td>
     </tr>`
@@ -142,14 +144,10 @@ function borrarRegistroReservation(idReservation) {
         contentType: 'application/json',
 
         success: function (data) {
-            palco.val("");
-            cliente.val("");
-            fechaInicio.val("");
-            fechaEntrega.val("");
             alert('Registro Borrado');
         },
         error: function (xhr, status) {
-            //  alert('ha sucedido un problema');
+            console.log(xhr)
         },
         complete: function () {
             traerReservation();

@@ -11,9 +11,7 @@ function traerMensajes() {
 
         success: function (data) {
             console.log(data)
-            if (data.length) {
-                pintarRespuestaMensajes(data);
-            }
+            pintarRespuestaMensajes(data);
 
         },
         error: function (xhr, status) {
@@ -35,6 +33,11 @@ function drawTableRow(item) {
         <td>
         <div class="row g-3">
             <div class="col-auto">
+                <button class="btn btn-warning" onclick="actualizarRegistroMenssage()"> Actualizar</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger" onclick="borrarRegistroMensaje(${item.idMessage})"> Borrar</button>
+            </div>
         </div>
         </td>
     </tr>`
@@ -140,14 +143,10 @@ function borrarRegistroMensaje(idMensaje) {
         contentType: 'application/json',
 
         success: function () {
-            $("#id").val("");
-            $("#box").val("");
-            $("#client").val("");
-            $("#text").val("");
             alert('Registro Borrado');
         },
         error: function (xhr, status) {
-            //  alert('ha sucedido un problema');
+            console.log(xhr)
         },
         complete: function () {
             traerMensajes();

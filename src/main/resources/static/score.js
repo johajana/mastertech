@@ -10,10 +10,7 @@ function traerScore() {
 
         success: function (data) {
             console.log(data)
-            if (data.length) {
-                pintarRespuestaScore(data);
-            }
-
+            pintarRespuestaScore(data);
         },
         error: function (xhr, status) {
             alert(xhr);
@@ -29,6 +26,13 @@ function drawTableRowScore(score) {
         <td>${score.messageText}</td>
         <td>${score.reservation.idReservation}</td>   
         <td>     
+        <div class="row g-3">
+            <div class="col-auto">
+                <button class="btn btn-warning" onclick="actualizarRegistroScore()"> Actualizar</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger" onclick="borrarRegistroScore(${score.idScore})"> Borrar</button>
+            </div>
         </div>
         </td>
     </tr>`
@@ -136,14 +140,10 @@ function borrarRegistroScore(idScore) {
         contentType: 'application/json',
 
         success: function (data) {
-            calificacion.val("");
-            mensaje.val("");
-            reserva.val("");
-
             alert('Registro Borrado');
         },
         error: function (xhr, status) {
-            //  alert('ha sucedido un problema');
+            console.log(xhr)
         },
         complete: function () {
             traerScore();
